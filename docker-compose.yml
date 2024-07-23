@@ -1,0 +1,44 @@
+version: '3'
+
+services:
+  myapp:
+    build: 
+      context: .
+      dockerfile: dev.Dockerfile
+    ports:
+      - "8000:8080"
+    networks:
+      - backend
+    volumes:
+      - ./:/app
+    environment:
+      - PLAYGROUND_URL=http://localhost:8080/playground
+  db:
+    image: postgres:16
+    restart: always
+    ports:
+      - 5432:5432
+    networks:
+      - backend
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgresql
+    
+  admin:
+    image: dpage/pgadmin4
+    restart: always
+    depends_on:
+      - db
+    ports:
+      - 80:80
+    networks:
+      - backend
+    environment:
+      PGADMIN_DEFAULT_EMAIL: luisacu@gmail.com
+      PGADMIN_DEFAULT_PASSWORD: priver123.
+
+networks:
+  backend:
+    external: false
+    driver: bridge
+    name: backend

@@ -1,0 +1,22 @@
+# GraphQL schema example
+#
+# https://gqlgen.com/getting-started/
+
+schema{
+  query: Query
+  mutation: Mutation
+}
+
+
+type Query {
+  textFileContent: [String!]
+}
+
+# Mutation para agregar una linea de texto al documento
+
+type Mutation {
+    write(B: String!): [String!]
+    deleteValue: String!
+    deleteSingle(B: Int!):[String!]
+    updateSingle(B: Int!, newText: String!):[String!]
+}
